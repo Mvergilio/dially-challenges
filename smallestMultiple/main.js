@@ -1,31 +1,47 @@
 function smallestMult(n) {
-    let product = 2;
-    let tempHolder = null;
-    let holder = n;
-    let arrayOfPrime = [],
-        arrayOfFactors = [],
+    let holder = n,
         arrayOfNumbers = [];
     while (holder > 0) {
         arrayOfNumbers.unshift(holder);
         holder--;
     }
-
-
-    while (!(arrayOfNumbers.every((elem) => { elem == 1 }))) {
-        arrayOfNumbers = arrayOfNumbers.map((elem) => {
-
-            if (elem % product == 0 && product % 2 !== 0 && product != 2) {
-                return elem / product;
-            } else {
-                if (elem % product > 0) {
-                    return elem
-                } else {
-                    product++;
-                }
-            }
-
-        })
-        console.log(arrayOfNumbers);
-    }
+    callBackByDivision(arrayOfNumbers);
 }
-smallestMult(5);
+
+function callBackByDivision(arr) {
+    let product = 1;
+    let result = true;
+    let arrResult;
+    let arrProduct = []
+
+    do {
+        arrResult = arr.some((elem) => {
+            return elem % 2 === 0 ? true : false;
+        });
+        if (arrResult) {
+            product = 2;
+        }
+        if (product % 2 == 0 && product !== 2) {
+            product++;
+        } else if (!arrResult) {
+            arrProduct.push(product);
+            arr = arr.map((element) => {
+                if (element % product == 0) {
+                    return element / product;
+                } else {
+                    return element;
+                }
+            });
+            product++
+        }
+        result = arr.every((elem) => {
+            return elem === 1;
+        });
+        if (product > arr.length) {
+            product = 1;
+        }
+
+        console.log(arrProduct, product)
+    } while (result == false);
+}
+smallestMult(20);
