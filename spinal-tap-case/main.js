@@ -1,22 +1,25 @@
 function spinalTapCase(str) {
-    str = str.replace(/[^\p{L}\d\s@#]/ug, "-")
-    let newStr = str;
-    let i = 0;
-    let strArray = []
-    let index = 0;
-    while (i < newStr.length) {
-        if (newStr[i] == newStr[i].toUpperCase() && newStr[i] !== "-") {
-            let string = newStr.slice(index, i);
-            let firstString = newStr.slice(i, -0);
-            strArray.pop()
-            strArray.push(string, firstString);
-            index = i;
-        }
-        console.log(strArray.join('-'));
-        i++
+  str = str.split(/[^\p{L}\d?]/gu);
+  let newStr = str;
+  let tempVar = null;
+  for (let i = 0; i < str.length; i++) {
+    for (let j = 0; j < str[i].length; j++) {
+      if (
+        newStr[i][j] == newStr[i][j].toUpperCase() &&
+        newStr[i].indexOf(newStr[i][j]) !== 0
+      ) {
+        tempVar = newStr[i].split("");
+        tempVar.splice(j, 1, newStr[i][j].toLowerCase());
+        tempVar.splice(j, 0, "-");
+        tempVar = tempVar.join("");
+        tempVar[j].toLowerCase();
+        newStr[i] = tempVar;
+        console.log(tempVar);
+      }
     }
-
+  }
+  str = str.join("-").toLowerCase();
+  console.log(str);
 }
 
-
-spinalTapCase("spinal_CaseWord*test")
+spinalTapCase("thisIsSpinal Tap&more");
