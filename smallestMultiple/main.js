@@ -5,11 +5,22 @@ function smallestMult(n) {
         nArr.push(i);
         i++;
     }
-    for (let j = 0; j < nArr.length; j++) {
-        const element = nArr[j];
-
+    function callBackNArr(array) {
+        // let array2 = [];
+        const first = array.shift();
+        const second = array.shift();
+        let factor = (first * second) / findingFactorOfTwoNum(first, second);
+        if (array.length < 1) {
+            array.unshift(factor);
+            return array[0];
+        } else {
+            array.unshift(factor);
+            callBackNArr(array);
+        }
+        return array[0];
     }
-
+    let multiple = callBackNArr(nArr);
+    console.log(multiple);
 }
 
 function findingFactorOfTwoNum(n1, n2) {
